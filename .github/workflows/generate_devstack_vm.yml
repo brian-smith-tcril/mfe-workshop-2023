@@ -16,7 +16,7 @@ jobs:
     - name: Install deps
       run: |
         sudo apt-get update
-        sudo apt-get install qemu
+        sudo apt-get install qemu qemu-system-x86
 
     - name: Generate Devstack VM
       run: |
