@@ -19,6 +19,9 @@ jobs:
         sudo apt-get install qemu qemu-system-x86 qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
         sudo modprobe kvm
 
+    - name: Verify KVM is available
+      run: sudo kvm-ok
+
     - name: Generate Devstack VM
       run: |
         packer init .
