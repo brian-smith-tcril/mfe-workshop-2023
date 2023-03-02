@@ -13,6 +13,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Install deps
+      run: |
+        sudo apt-get update
+        sudo apt-get install qemu
+
     - name: Generate Devstack VM
       run: |
         packer init .
