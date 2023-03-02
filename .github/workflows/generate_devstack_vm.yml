@@ -17,6 +17,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install qemu qemu-system-x86
+        sudo modprobe kvm
 
     - name: Generate Devstack VM
       run: |
