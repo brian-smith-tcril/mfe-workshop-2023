@@ -6,10 +6,6 @@ packer {
       source  = "github.com/hashicorp/qemu"
       version = ">= 1.0.0, < 2.0.0"
     }
-    virtualbox = {
-      source  = "github.com/hashicorp/virtualbox"
-      version = ">= 1.0.0, < 2.0.0"
-    }
   }
 }
 
