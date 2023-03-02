@@ -1,0 +1,24 @@
+
+name: Generate Devstack VM
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Generate Devstack VM
+      run: |
+        packer validate .
+        packer build devstack-vm.pkr.hcl 
+    - name: Upload generated vm
+      uses: actions/upload-artifact@v3
+      with:
+        name: devstack-bullseye.qcow2.tar.gz
+        path: build

@@ -293,7 +293,7 @@ source "qemu" "devstack-qemu" {
   disk_image           = false
   disk_interface       = "virtio-scsi"
   disk_size            = var.disk_size
-  format               = "raw"
+  format               = "qcow2"
   headless             = var.headless
   host_port_max        = var.host_port_max
   host_port_min        = var.host_port_min
@@ -370,9 +370,7 @@ build {
   }
 
   post-processor "compress" {
-    compression_level   = 6
-    format              = ".gz"
-    keep_input_artifact = true
-    output              = "${local.output_directory}/${var.vm_name}.raw.gz"
+    compression_level   = 9
+    output              = "build/${var.vm_name}.qcow2.tar.gz"
   }
 }
