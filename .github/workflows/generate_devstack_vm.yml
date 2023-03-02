@@ -15,8 +15,9 @@ jobs:
 
     - name: Generate Devstack VM
       run: |
+        packer init .
         packer validate .
-        packer build devstack-vm.pkr.hcl 
+        packer build .
     - name: Upload generated vm
       uses: actions/upload-artifact@v3
       with:
