@@ -278,7 +278,7 @@ source "qemu" "devstack-qemu" {
     "hostname=${var.vm_name} ",
     "domain=${var.domain} ",
     "interface=auto ",
-    "noprompt quiet --<enter>"
+    "vga=788 noprompt quiet --<enter>"
   ]
   boot_wait            = var.boot_wait
   communicator         = var.communicator
