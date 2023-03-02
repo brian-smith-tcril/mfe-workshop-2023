@@ -268,7 +268,7 @@ locals {
 }
 
 source "qemu" "devstack-qemu" {
-  accelerator = "kvm"
+  accelerator = "qemu"
   boot_command = [
     "<wait><wait><wait><esc><wait><wait><wait>",
     "/install.amd/vmlinuz ",
