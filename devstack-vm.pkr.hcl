@@ -207,7 +207,7 @@ variable "ssh_pty" {
 
 variable "ssh_timeout" {
   type    = string
-  default = "60m"
+  default = "120m"
 }
 
 variable "ssh_username" {
