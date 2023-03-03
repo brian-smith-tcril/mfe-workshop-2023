@@ -361,9 +361,56 @@ build {
     binary              = false
     execute_command     = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
     expect_disconnect   = true
-    inline              = ["dd if=/dev/zero of=/ZEROFILL bs=16M || true", "rm /ZEROFILL", "sync"]
+    inline              = ["apt-get --yes install make python docker-compose git python3-pip"]
     inline_shebang      = "/bin/sh -e"
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
   }
+
+  provisioner "shell" {
+    binary              = false
+    execute_command     = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
+    expect_disconnect   = true
+    inline              = ["usermod -aG docker devstack"]
+    inline_shebang      = "/bin/sh -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+  }
+
+  provisioner "shell" {
+    binary              = false
+    expect_disconnect   = true
+    inline              = ["groups $USER"]
+    inline_shebang      = "/bin/sh -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+  }
+
+  provisioner "shell" {
+    binary              = false
+    execute_command     = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
+    expect_disconnect   = true
+    inline              = ["systemctl status docker"]
+    inline_shebang      = "/bin/sh -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+  }
+
+  provisioner "shell" {
+    binary              = false
+    expect_disconnect   = true
+    script              = "mkdir-clone-and-provision.sh"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+  }
+
+  provisioner "shell" {
+    binary              = false
+    execute_command     = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
+    expect_disconnect   = true
+    inline              = ["dd if=/dev/zero of=/ZEROFILL bs=16M || true", "rm /ZEROFILL", "sync"]
+    inline_shebang      = "/bin/sh -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+  }  
 }
