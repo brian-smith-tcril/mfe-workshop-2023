@@ -20,7 +20,7 @@ jobs:
       run: |
         packer init .
         packer validate .
-        PACKER_LOG=1 packer build -machine-readable -var headless=true .
+        PACKER_LOG=1 packer build -machine-readable -var accelerator=tcg -var headless=true .
     - name: Upload generated vm
       uses: actions/upload-artifact@v3
       with:

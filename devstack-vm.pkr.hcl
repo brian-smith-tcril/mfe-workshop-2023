@@ -260,6 +260,11 @@ variable "vnc_vrdp_port_min" {
   default = "5900"
 }
 
+variable "accelerator" {
+  type    = string
+  default = "kvm"
+}
+
 # The "legacy_isotime" function has been provided for backwards compatability,
 # but we recommend switching to the timestamp and formatdate functions.
 
@@ -268,7 +273,7 @@ locals {
 }
 
 source "qemu" "devstack-qemu" {
-  accelerator = "tcg"
+  accelerator = var.accelerator
   boot_command = [
     "<wait><wait><wait><esc><wait><wait><wait>",
     "/install.amd/vmlinuz ",
