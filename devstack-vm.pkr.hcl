@@ -265,11 +265,8 @@ variable "accelerator" {
   default = "kvm"
 }
 
-# The "legacy_isotime" function has been provided for backwards compatability,
-# but we recommend switching to the timestamp and formatdate functions.
-
 locals {
-  output_directory = "build/${legacy_isotime("2006-01-02-15-04-05")}"
+  output_directory = "build"
 }
 
 source "qemu" "devstack-qemu" {
@@ -329,7 +326,7 @@ source "qemu" "devstack-qemu" {
   ssh_timeout                  = var.ssh_timeout
   ssh_username                 = var.ssh_username
   use_default_display          = false
-  vm_name                      = var.vm_name
+  vm_name                      = "${var.vm_name}.qcow2"
   vnc_bind_address             = var.vnc_vrdp_bind_address
   vnc_port_max                 = var.vnc_vrdp_port_max
   vnc_port_min                 = var.vnc_vrdp_port_min
@@ -368,10 +365,5 @@ build {
     inline_shebang      = "/bin/sh -e"
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
-  }
-
-  post-processor "compress" {
-    compression_level   = 9
-    output              = "build/${var.vm_name}.qcow2.tar.gz"
   }
 }
