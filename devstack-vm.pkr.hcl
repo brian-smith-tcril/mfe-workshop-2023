@@ -41,7 +41,7 @@ variable "description" {
 
 variable "disk_size" {
   type    = string
-  default = "25000"
+  default = "50000"
 }
 
 variable "domain" {
@@ -417,6 +417,17 @@ build {
   }
 
   provisioner "shell" {
+    binary              = false
+    execute_command     = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
+    expect_disconnect   = true
+    inline              = ["reboot"]
+    inline_shebang      = "/bin/sh -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+  }
+
+  provisioner "shell" {
+    pause_before        = "60s"
     binary              = false
     expect_disconnect   = true
     script              = "mkdir-clone-and-provision.sh"

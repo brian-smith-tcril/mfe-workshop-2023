@@ -10,5 +10,5 @@ source devstack-venv/bin/activate
 cd devstack
 make requirements
 SHALLOW_CLONE=1 make dev.clone.https
-# make dev.pull.large-and-slow
-# make dev.provision
+make dev.pull.large-and-slow
+make dev.provision
