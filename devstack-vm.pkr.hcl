@@ -398,8 +398,10 @@ build {
 
   provisioner "shell" {
     binary              = false
+    execute_command     = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
     expect_disconnect   = true
-    script              = "mkdir-clone-and-provision.sh"
+    inline              = ["sed -i 's/GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"net.ifnames=0 biosdevname=0 interface=auto\"/' /etc/default/grub", "update-grub"]
+    inline_shebang      = "/bin/sh -e"
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
   }
@@ -408,9 +410,17 @@ build {
     binary              = false
     execute_command     = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
     expect_disconnect   = true
-    inline              = ["dd if=/dev/zero of=/ZEROFILL bs=16M || true", "rm /ZEROFILL", "sync"]
+    inline              = ["echo 'allow-hotplug eth0' >> /etc/network/interfaces", "echo 'iface eth0 inet dhcp' >> /etc/network/interfaces"]
     inline_shebang      = "/bin/sh -e"
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
-  }  
+  }
+
+  provisioner "shell" {
+    binary              = false
+    expect_disconnect   = true
+    script              = "mkdir-clone-and-provision.sh"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+  }
 }

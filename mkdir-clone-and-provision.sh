@@ -1,3 +1,5 @@
+export PATH=$PATH:/home/devstack/.local/bin
+pip install virtualenv
 mkdir code
 cd code
 mkdir devstackworkspace
@@ -8,5 +10,5 @@ source devstack-venv/bin/activate
 cd devstack
 make requirements
 make dev.clone.https
-make dev.pull.large-and-slow
-make dev.provision
+# make dev.pull.large-and-slow
+# make dev.provision
