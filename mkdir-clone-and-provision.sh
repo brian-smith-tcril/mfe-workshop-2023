@@ -9,6 +9,6 @@ virtualenv devstack-venv
 source devstack-venv/bin/activate
 cd devstack
 make requirements
-make dev.clone.https
+SHALLOW_CLONE=1 make dev.clone.https
 # make dev.pull.large-and-slow
 # make dev.provision
