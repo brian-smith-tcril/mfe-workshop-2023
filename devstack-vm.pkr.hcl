@@ -430,8 +430,57 @@ build {
     pause_before        = "60s"
     binary              = false
     expect_disconnect   = true
-    script              = "mkdir-clone-and-provision.sh"
+    inline              = ["export PATH=$PATH:/home/devstack/.local/bin", "pip install virtualenv", "mkdir code", "cd code", "mkdir devstackworkspace", "cd devstackworkspace", "virtualenv devstack-venv"]
+    inline_shebang      = "/bin/sh -e"
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
+  }
+
+  provisioner "shell" {
+    binary              = false
+    expect_disconnect   = true
+    inline              = ["cd code", "cd devstackworkspace", "git clone https://github.com/openedx/devstack.git"]
+    inline_shebang      = "/bin/sh -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+  }
+
+  provisioner "shell" {
+    binary              = false
+    expect_disconnect   = true
+    inline              = ["cd code", "cd devstackworkspace", "ls", "source devstack-venv/bin/activate", "cd devstack", "make requirements"]
+    inline_shebang      = "/bin/bash -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+  }
+
+  provisioner "shell" {
+    binary              = false
+    expect_disconnect   = true
+    inline              = ["cd code", "cd devstackworkspace", "source devstack-venv/bin/activate", "cd devstack", "SHALLOW_CLONE=1 make dev.clone.https"]
+    inline_shebang      = "/bin/bash -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+    max_retries = 5
+  }
+
+  provisioner "shell" {
+    binary              = false
+    expect_disconnect   = true
+    inline              = ["cd code", "cd devstackworkspace", "source devstack-venv/bin/activate", "cd devstack", "SHALLOW_CLONE=1 make dev.pull.large-and-slow"]
+    inline_shebang      = "/bin/bash -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+    max_retries = 5
+  }
+
+  provisioner "shell" {
+    binary              = false
+    expect_disconnect   = true
+    inline              = ["cd code", "cd devstackworkspace", "source devstack-venv/bin/activate", "cd devstack", "COMPOSE_HTTP_TIMEOUT=600 make dev.provision"]
+    inline_shebang      = "/bin/bash -e"
+    skip_clean          = false
+    start_retry_timeout = var.start_retry_timeout
+    max_retries = 5
   }
 }
