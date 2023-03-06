@@ -628,6 +628,12 @@ build {
     start_retry_timeout = var.start_retry_timeout
     max_retries = 5
   }
+
+  post-processor "compress" {
+    compression_level   = 9
+    keep_input_artifact = true
+    output              = "${local.output_directory}/temp3/${var.vm_name}.step3.qcow2.tar.gz"
+  }
 }
 
 build {
@@ -645,5 +651,11 @@ build {
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
     max_retries = 5
+  }
+
+  post-processor "compress" {
+    compression_level   = 9
+    keep_input_artifact = true
+    output              = "${local.output_directory}/final/${var.vm_name}.qcow2.tar.gz"
   }
 }

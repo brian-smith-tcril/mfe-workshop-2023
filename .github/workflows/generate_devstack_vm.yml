@@ -80,7 +80,7 @@ jobs:
     - name: Upload generated vm
       uses: actions/upload-artifact@v3
       with:
-        name: devstack-bullseye.step3.qcow2
+        name: devstack-bullseye.step3.qcow2.tar.gz
         path: build/temp3
 
   build-provision:
@@ -97,8 +97,14 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v3
       with:
-        name: devstack-bullseye.step3.qcow2
+        name: devstack-bullseye.step3.qcow2.tar.gz
         path: build/temp3
+
+    - name: Extract files from artifact
+      run: |
+        cd build
+        cd temp3
+        tar xzvf devstack-bullseye.step3.qcow2.tar.gz
 
     - name: Run devstack provision in vm
       run: |
@@ -107,5 +113,5 @@ jobs:
     - name: Upload generated vm
       uses: actions/upload-artifact@v3
       with:
-        name: devstack-bullseye.qcow2
+        name: devstack-bullseye.qcow2.tar.gz
         path: build/final
