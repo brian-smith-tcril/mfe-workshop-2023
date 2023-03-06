@@ -628,16 +628,6 @@ build {
     start_retry_timeout = var.start_retry_timeout
     max_retries = 5
   }
-
-  provisioner "shell" {
-    binary              = false
-    expect_disconnect   = true
-    inline              = ["cd code", "cd devstackworkspace", "source devstack-venv/bin/activate", "cd devstack", "COMPOSE_HTTP_TIMEOUT=600 make dev.provision"]
-    inline_shebang      = "/bin/bash -e"
-    skip_clean          = false
-    start_retry_timeout = var.start_retry_timeout
-    max_retries = 5
-  }
 }
 
 build {
