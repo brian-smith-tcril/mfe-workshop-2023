@@ -622,7 +622,7 @@ build {
   provisioner "shell" {
     binary              = false
     expect_disconnect   = true
-    inline              = ["cd code", "cd devstackworkspace", "source devstack-venv/bin/activate", "cd devstack", "make dev.pull.large-and-slow"]
+    inline              = ["cd code", "cd devstackworkspace", "source devstack-venv/bin/activate", "cd devstack", "make dev.pull.studio+ecommerce"]
     inline_shebang      = "/bin/bash -e"
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
