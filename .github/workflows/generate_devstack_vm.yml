@@ -30,6 +30,7 @@ jobs:
         path: build/temp1
   
   build-checkout:
+    needs: build-base
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
