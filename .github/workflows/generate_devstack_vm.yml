@@ -8,7 +8,7 @@ on:
     branches: [ "**" ]
 
 jobs:
-  build:
+  build-base:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -22,9 +22,36 @@ jobs:
       run: |
         packer init .
         packer validate .
+        PACKER_LOG=1 packer build -only=debian_and_deps.* -machine-readable -var accelerator=tcg -var headless=true .
+    - name: Upload temp image
+      uses: actions/upload-artifact@v3
+      with:
+        name: devstack-bullseye.step1.qcow2
+        path: build/temp1
+  
+  build-checkout:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install deps
+      run: |
+        sudo apt-get update
+        sudo apt-get install qemu qemu-system-x86
+
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: devstack-bullseye.step1.qcow2
+        path: build/temp1
+
+    - name: Generate Devstack VM
+      run: |
+        packer init .
+        packer validate .
         PACKER_LOG=1 packer build -machine-readable -var accelerator=tcg -var headless=true .
     - name: Upload generated vm
       uses: actions/upload-artifact@v3
       with:
-        name: devstack-bullseye.qcow2
+        name: devstack-bullseye.step2.qcow2
         path: build
