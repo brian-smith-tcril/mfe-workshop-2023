@@ -18,7 +18,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install qemu qemu-system-x86
 
-    - name: Generate Devstack VM
+    - name: Generate base devstack VM
       run: |
         packer init .
         packer validate .
@@ -46,10 +46,9 @@ jobs:
         name: devstack-bullseye.step1.qcow2
         path: build/temp1
 
-    - name: Generate Devstack VM
+    - name: Clone devstack repos in vm
       run: |
         packer init .
-        packer validate .
         PACKER_LOG=1 packer build -only=devstack_clone.* -machine-readable -var accelerator=tcg -var headless=true .
     - name: Upload generated vm
       uses: actions/upload-artifact@v3
@@ -74,10 +73,9 @@ jobs:
         name: devstack-bullseye.step2.qcow2
         path: build/temp2
 
-    - name: Generate Devstack VM
+    - name: Pull devstack docker images in vm
       run: |
         packer init .
-        packer validate .
         PACKER_LOG=1 packer build -only=devstack_pull.* -machine-readable -var accelerator=tcg -var headless=true .
     - name: Upload generated vm
       uses: actions/upload-artifact@v3
@@ -102,10 +100,9 @@ jobs:
         name: devstack-bullseye.step3.qcow2
         path: build/temp3
 
-    - name: Generate Devstack VM
+    - name: Run devstack provision in vm
       run: |
         packer init .
-        packer validate .
         PACKER_LOG=1 packer build -only=devstack_provision.* -machine-readable -var accelerator=tcg -var headless=true .
     - name: Upload generated vm
       uses: actions/upload-artifact@v3
