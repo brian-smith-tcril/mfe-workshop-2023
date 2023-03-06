@@ -269,7 +269,7 @@ locals {
   output_directory = "build"
 }
 
-source "qemu" "devstack-qemu" {
+source "qemu" "debian-and-deps" {
   accelerator = var.accelerator
   boot_command = [
     "<wait><wait><wait><esc><wait><wait><wait>",
@@ -308,7 +308,56 @@ source "qemu" "devstack-qemu" {
   machine_type                 = "pc"
   memory                       = var.memory
   net_device                   = "virtio-net"
-  output_directory             = local.output_directory
+  output_directory             = "${local.output_directory}/temp1"
+  qemu_binary                  = var.qemu_binary
+  shutdown_command             = "echo '${var.ssh_password}' | sudo -E -S poweroff"
+  shutdown_timeout             = var.shutdown_timeout
+  skip_compaction              = true
+  skip_nat_mapping             = false
+  ssh_agent_auth               = var.ssh_agent_auth
+  ssh_clear_authorized_keys    = var.ssh_clear_authorized_keys
+  ssh_disable_agent_forwarding = var.ssh_disable_agent_forwarding
+  ssh_file_transfer_method     = var.ssh_file_transfer_method
+  ssh_handshake_attempts       = var.ssh_handshake_attempts
+  ssh_keep_alive_interval      = var.ssh_keep_alive_interval
+  ssh_password                 = var.ssh_password
+  ssh_port                     = var.ssh_port
+  ssh_pty                      = var.ssh_pty
+  ssh_timeout                  = var.ssh_timeout
+  ssh_username                 = var.ssh_username
+  use_default_display          = false
+  vm_name                      = "${var.vm_name}.step1.qcow2"
+  vnc_bind_address             = var.vnc_vrdp_bind_address
+  vnc_port_max                 = var.vnc_vrdp_port_max
+  vnc_port_min                 = var.vnc_vrdp_port_min
+}
+
+source "qemu" "devstack-img-a" {
+  accelerator = var.accelerator
+  boot_wait            = var.boot_wait
+  communicator         = var.communicator
+  cpus                 = var.cpus
+  disk_cache           = "writeback"
+  disk_compression     = false
+  disk_discard         = "ignore"
+  disk_image           = true
+  disk_interface       = "virtio-scsi"
+  disk_size            = var.disk_size
+  format               = "qcow2"
+  headless             = var.headless
+  host_port_max        = var.host_port_max
+  host_port_min        = var.host_port_min
+  http_content         = { "/${var.preseed_file}" = templatefile(var.preseed_file, { var = var }) }
+  http_port_max        = var.http_port_max
+  http_port_min        = var.http_port_min
+  iso_checksum         = "none"
+  iso_urls = [
+    "${local.output_directory}/temp1/${var.vm_name}.step1.qcow2"
+  ]
+  machine_type                 = "pc"
+  memory                       = var.memory
+  net_device                   = "virtio-net"
+  output_directory             = "${local.output_directory}/final"
   qemu_binary                  = var.qemu_binary
   shutdown_command             = "echo '${var.ssh_password}' | sudo -E -S poweroff"
   shutdown_timeout             = var.shutdown_timeout
@@ -332,10 +381,13 @@ source "qemu" "devstack-qemu" {
   vnc_port_min                 = var.vnc_vrdp_port_min
 }
 
+
 build {
+  name = "debian_and_deps"
+
   description = "Can't use variables here yet!"
 
-  sources = ["source.qemu.devstack-qemu"]
+  sources = ["source.qemu.debian-and-deps"]
 
   provisioner "shell" {
     binary              = false
@@ -415,19 +467,16 @@ build {
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
   }
+}
+
+build {
+  name = "all_the_rest"
+  
+  description = "Can't use variables here yet!"
+
+  sources = ["source.qemu.devstack-img-a"]
 
   provisioner "shell" {
-    binary              = false
-    execute_command     = "echo '${var.ssh_password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
-    expect_disconnect   = true
-    inline              = ["reboot"]
-    inline_shebang      = "/bin/sh -e"
-    skip_clean          = false
-    start_retry_timeout = var.start_retry_timeout
-  }
-
-  provisioner "shell" {
-    pause_before        = "60s"
     binary              = false
     expect_disconnect   = true
     inline              = ["export PATH=$PATH:/home/devstack/.local/bin", "pip install virtualenv", "mkdir code", "cd code", "mkdir devstackworkspace", "cd devstackworkspace", "virtualenv devstack-venv"]
