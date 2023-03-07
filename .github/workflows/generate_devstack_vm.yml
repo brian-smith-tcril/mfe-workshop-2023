@@ -28,5 +28,5 @@ jobs:
     - name: Upload generated vm
       uses: actions/upload-artifact@v3
       with:
-        name: devstack-bullseye.qcow2
+        name: devstack-bullseye.qcow2.tar.gz
         path: build
