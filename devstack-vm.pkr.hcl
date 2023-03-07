@@ -434,4 +434,9 @@ build {
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
   }
+
+  post-processor "checksum" {
+    checksum_types = ["md5", "sha1", "sha256", "sha512"]
+    output = "${local.output_directory}/${var.vm_name}_{{.ChecksumType}}.checksum"
+  }
 }

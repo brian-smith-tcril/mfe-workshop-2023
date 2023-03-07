@@ -30,4 +30,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: devstack-bullseye.qcow2
-        path: build
+        path: build/devstack-bullseye.qcow2
+    - name: Upload checksums
+      uses: actions/upload-artifact@v3
+      with:
+        name: checksums
+        path: build/devstack-bullseye_*
