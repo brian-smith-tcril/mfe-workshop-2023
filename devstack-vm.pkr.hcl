@@ -434,10 +434,4 @@ build {
     skip_clean          = false
     start_retry_timeout = var.start_retry_timeout
   }
-
-  post-processor "compress" {
-    compression_level   = 9
-    keep_input_artifact = true
-    output              = "${local.output_directory}/${var.vm_name}.qcow2.tar.gz"
-  }
 }
