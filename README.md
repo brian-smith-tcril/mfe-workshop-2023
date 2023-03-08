@@ -8,14 +8,25 @@ More details about the workshop, including the date and time, can be found on th
 
 To participate in the interactive portion of the workshop, you will need to set up your development environment using the Open edX Devstack. There are two options for setting up Devstack locally:
 
-### Option 1: Use a pre-built VM
+### Option 1: Use a pre-built VM image
 
 This option is faster because all Docker images have already been pulled and the provision scripts have already run. Follow these steps to use this option:
 
+#### Create a VM using the image 
 1. Download the pre-built VM image from [here](https://nightly.link/brian-smith-tcril/mfe-workshop-2023/workflows/generate_devstack_vm/use-selfhosted/devstack-bullseye.qcow2.zip). (~14GB compressed, ~33GB extracted)
 2. Verify the image using a checksum from [here](https://nightly.link/brian-smith-tcril/mfe-workshop-2023/workflows/generate_devstack_vm/use-selfhosted/checksums.zip).
 3. Set up the VM and forward the ports to access everything running in the VM from your host machine. You may refer to the [example config file](EXAMPLE_VM_CONFIG.md) or the step by step instructions for [Linux](DEVSTACK_VM_SETUP_LINUX.md) or [Mac](DEVSTACK_VM_SETUP_MAC.md).
-4. Verify that everything is working correctly by going to http://localhost:18000/ and seeing an Open edX page.
+
+#### Run devstack in the VM
+1. Log in to the VM with `username: devstack, password: devstack`
+2. Run devstack
+```bash
+cd code/devstackworkspace
+source devstack-venv/bin/activate
+cd devstack
+make dev.up.large-and-slow
+```
+3. Verify that everything is working correctly by going to http://localhost:18000/ and seeing an Open edX page.
 
 ### Option 2: Install Devstack with Docker
 
