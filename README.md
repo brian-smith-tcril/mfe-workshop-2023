@@ -12,8 +12,8 @@ To participate in the interactive portion of the workshop, you will need to set 
 
 This option is faster because all Docker images have already been pulled and the provision scripts have already run. Follow these steps to use this option:
 
-1. Download the pre-built VM from https://nightly.link/brian-smith-tcril/mfe-workshop-2023/workflows/generate_devstack_vm/use-selfhosted/devstack-bullseye.qcow2.zip.
-2. Verify the checksum against https://nightly.link/brian-smith-tcril/mfe-workshop-2023/workflows/generate_devstack_vm/use-selfhosted/checksums.zip.
+1. Download the pre-built VM image from [here](https://nightly.link/brian-smith-tcril/mfe-workshop-2023/workflows/generate_devstack_vm/use-selfhosted/devstack-bullseye.qcow2.zip). (~14GB compressed, ~33GB extracted)
+2. Verify the image using a checksum from [here](https://nightly.link/brian-smith-tcril/mfe-workshop-2023/workflows/generate_devstack_vm/use-selfhosted/checksums.zip).
 3. Set up the VM and forward the ports to access everything running in the VM from your host machine. You may refer to the [example config file](EXAMPLE_VM_CONFIG.md) or the step by step instructions for [Linux](DEVSTACK_VM_SETUP_LINUX.md) or [Mac](DEVSTACK_VM_SETUP_MAC.md).
 4. Verify that everything is working correctly by going to http://localhost:18000/ and seeing an Open edX page.
 
