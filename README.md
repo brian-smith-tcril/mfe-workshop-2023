@@ -14,6 +14,10 @@ In order to participate in the interactive portion of this workshop, you should 
 ### use a pre-configured vm
 * download
 * todo nightly.link
+
+https://nightly.link/brian-smith-tcril/mfe-workshop-2023/workflows/generate_devstack_vm/use-selfhosted/checksums.zip
+https://nightly.link/brian-smith-tcril/mfe-workshop-2023/workflows/generate_devstack_vm/use-selfhosted/devstack-bullseye.qcow2.zip
+
 * Linux todo link
 * Mac todo link
 
