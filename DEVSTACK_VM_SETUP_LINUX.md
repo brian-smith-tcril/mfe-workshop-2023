@@ -1,7 +1,7 @@
 # QEMU (CLI)
 Example using 8GB of RAM and 8 CPU cores:
 ```sh
-$ qemu-system-x86_64 -m 8096 -enable-kvm -smp 8 -netdev user,id=mynet.0,hostfwd=tcp::18000-:18000 -device virtio-net-pci,netdev=mynet.0 -hda devstack-bullseye.qcow2
+$ qemu-system-x86_64 -m 8096 -enable-kvm -smp 8 -netdev user,id=mynet.0,hostfwd=tcp::18000-:18000,hostfwd=tcp::1995-:1995 -device virtio-net-pci,netdev=mynet.0 -hda devstack-bullseye.qcow2
 ```
 
 # GNOME Boxes

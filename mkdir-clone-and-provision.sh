@@ -5,6 +5,7 @@ cd code
 mkdir devstackworkspace
 cd devstackworkspace
 git clone https://github.com/openedx/devstack.git
+mv /tmp/options.local.mk ./devstack
 virtualenv devstack-venv
 source devstack-venv/bin/activate
 cd devstack

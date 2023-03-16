@@ -426,6 +426,11 @@ build {
     start_retry_timeout = var.start_retry_timeout
   }
 
+  provisioner "file" {
+    destination = "/tmp/"
+    source      = "./options.local.mk"
+  }
+
   provisioner "shell" {
     pause_before        = "60s"
     binary              = false

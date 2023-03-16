@@ -1,0 +1,1 @@
+DEFAULT_SERVICES = credentials+discovery+ecommerce+edx_notes_api+forum+frontend-app-authn+frontend-app-gradebook+frontend-app-payment+frontend-app-publisher+frontend-app-learning+lms+studio+frontend-app-profile
