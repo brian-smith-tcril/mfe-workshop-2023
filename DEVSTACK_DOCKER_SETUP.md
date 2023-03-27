@@ -44,7 +44,7 @@ $ source devstack-venv/bin/activate
 $ cd devstack
 $ make requirements
 $ make dev.clone.https
-$ make dev.pull.large-and-slow
-$ make dev.provision
-$ make dev.up.large-and-slow
+$ make dev.pull.lms+studio
+$ make dev.provision.lms+studio
+$ make dev.up.lms+studio
 ```
