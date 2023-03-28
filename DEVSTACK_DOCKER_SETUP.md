@@ -1,7 +1,7 @@
 # Local `devstack` Quickstart
 ## Install prerequisites
 * [`make`](https://www.gnu.org/software/make/)
-* [`python 3.x`](https://www.python.org/)
+* [`python 3.8`](https://www.python.org/)
 * [`pip`](https://pip.pypa.io/en/stable/)
 * [`docker-compose`](https://docs.docker.com/compose/)
 * [`git`](https://git-scm.com/)
