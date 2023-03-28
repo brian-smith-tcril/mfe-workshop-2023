@@ -36,7 +36,7 @@ This option is faster because all Docker images have already been pulled and the
 cd code/devstackworkspace
 source devstack-venv/bin/activate
 cd devstack
-make dev.up.large-and-slow
+make dev.up.lms+studio
 ```
 
 ## Option 2: Install Devstack with Docker
